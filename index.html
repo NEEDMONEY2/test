@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Camera App</title>
+  </head>
+  <body>
+    <h1>Camera App</h1>
+    <video id="videoElement"></video>
+    <button id="startButton">Start</button>
+    <button id="stopButton">Stop</button>
+    <script>
+      var video = document.querySelector("#videoElement");
+
+      // Start the camera
+      function startCamera() {
+        navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+          .then(function(stream) {
+            video.srcObject = stream;
+            video.play();
+          })
+          .catch(function(error) {
+            console.error("Error starting camera: ", error);
+          });
+      }
+
+      // Stop the camera
+      function stopCamera() {
+        var stream = video.srcObject;
+        var tracks = stream.getTracks();
+
+        tracks.forEach(function(track) {
+          track.stop();
+        });
+
+        video.srcObject = null;
+      }
+
+      // Start the camera when the Start button is clicked
+      document.querySelector("#startButton").addEventListener("click", function(event) {
+        startCamera();
+      });
+
+      // Stop the camera when the Stop button is clicked
+      document.querySelector("#stopButton").addEventListener("click", function(event) {
+        stopCamera();
+      });
+    </script>
+  </body>
+</html>
