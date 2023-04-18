@@ -6,8 +6,18 @@
 <body>
   <h1>Camera Example</h1>
   <button id="startButton">Start Camera</button>
-  <canvas id="canvas"></canvas>
-  <button id="saveButton">Save Photo</button>
-  <script src="index.js"></script>
+  <video id="video" autoplay></video>
+  <script>
+    const startButton = document.getElementById('startButton');
+    const video = document.getElementById('video');
+    startButton.onclick = () => {
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => {
+          video.srcObject = stream;
+          video.play();
+        })
+        .catch(err => console.log(err));
+    };
+  </script>
 </body>
 </html>
