@@ -1,8 +1,9 @@
 (function () {
     var takePicture = document.querySelector("#take-picture"),
-        showPicture = document.querySelector("#show-picture");
- 
-    if (takePicture &amp;&amp; showPicture) {
+        showPicture = document.querySelector("#show-picture"),
+        saveButton = document.querySelector("#save-button");
+
+    if (takePicture && showPicture && saveButton) {
         // 이벤트 설정
         takePicture.onchange = function (event) {
             // 찍은 사진이나 파일에 대한 참조 얻기
@@ -13,15 +14,24 @@
                 try {
                     // window.URL 객체 얻기
                     var URL = window.URL || window.webkitURL;
- 
+
                     // ObjectURL 생성
                     var imgURL = URL.createObjectURL(file);
- 
+
                     // src에 ObjectURL 지정
                     showPicture.src = imgURL;
- 
+
                     // Revoke ObjectURL
                     URL.revokeObjectURL(imgURL);
+
+                    // 저장하기 버튼 클릭 시
+                    saveButton.onclick = function() {
+                        // 이미지 다운로드 링크 생성
+                        var link = document.createElement('a');
+                        link.download = 'image.jpg';
+                        link.href = imgURL;
+                        link.click();
+                    }
                 }
                 catch (e) {
                     try {
