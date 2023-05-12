@@ -1,0 +1,27 @@
+img {
+    max-width: 300px;
+    max-height: 300px;
+}
+
+
+input[type="button"] {
+    background: #4db6ac;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    text-align: center;
+    width: 200px;
+    height: 200px;
+}
+
+header {
+    background: #4db6ac;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    text-align: center;
+}
+p {
+    color: #fff;
+    font-size: 40px;
+    margin: 0;
+    padding: 50px 0;
+}
