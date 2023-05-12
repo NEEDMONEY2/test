@@ -1,51 +1,74 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Object Detection API Demo</title>
-  </head>
-  <body>
-    <form id="image-form" enctype="multipart/form-data">
-      <input type="file" name="image" id="image-input">
-      <input type="button" value="Detect Objects" onclick="detectObjects()">
-    </form>
-    <div id="result"></div>
-    <script>
-        const url = "http://localhost:5000/v1/object-detection/yolov5s";
-        console.log(url);
-      </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-      function detectObjects() {
-        // Get file data from form
-        var formData = new FormData();
-        var fileInput = document.getElementById('image-input');
-        var file = fileInput.files[0];
-        formData.append('image', file);
 
-        // Send API request
-        $.ajax({
-          url: 'http://localhost:5000/v1/object-detection/yolov5s',
-          type: 'POST',
-          data: formData, 
-          contentType: false,
-          processData: false,
-          success: function(response) {
-            // Parse JSON response
-         const objects = JSON.parse(response);
+<head>
+  <title>Capstone</title>
+  <!-- css파일 -->
+  <link href="index.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href = https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css>
+</head>
+
+<body>
+  <!-- <h1><i class="fa-regular fa-folder-arrow-up"style="font-size:100px; color:red"></i></h1> -->
+
+  <header>
+    <p>
+     <i class="fa fa-cloud-upload" aria-hidden="true"></i>
+     <span class="up">up</span>
+     <span class="load">load</span>
+    </p>
+   </header>
+   
+  <form id="image-form" enctype="multipart/form-data">
+    <input type="file" name="image" id="image-input" onchange="previewImage(event)">
+    <img src="#" id="image-preview" style="display:none">
+    <input type="button" value="Detect Objects" onclick="detectObjects()">
+  </form>
+  <div id="result"></div>
+
+  <!-- javascript 파일 -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+    function detectObjects() {
+      // Get file data from form
+      var formData = new FormData();
+      var fileInput = document.getElementById('image-input');
+      var file = fileInput.files[0];
+      formData.append('image', file);
+
+      // Send API request
+      $.ajax({
+        url: 'http://localhost:5000/v1/object-detection/yolov5s',
+        type: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (response) {
+          // Parse JSON response
+          const objects = JSON.parse(response);
 
           // Extract class and name fields from objects array
-          const result = objects.map(obj => ({class: obj.class, name: obj.name}));
+          const result = objects.map(obj => ({ class: obj.class, name: obj.name }));
 
           // Display result
           $('#result').text(JSON.stringify(result));
-          },
-            error: function(error) {
-            console.error(error.status);
-            console.error(error.statusText);
-            console.error(error.responseText    );
-          }
-        });
-      }
-    </script>
-  </body>
+        },
+        error: function (error) {
+          console.error(error.status);
+          console.error(error.statusText);
+          console.error(error.responseText);
+        }
+      });
+    }
+
+    function previewImage(event) {
+      
+      var input = event.target;
+      var img = document.getElementById('image-preview');
+      img.style.display = "block";
+      img.src = URL.createObjectURL(input.files[0]);
+    }
+  </script>
+</body>
+
 </html>
