@@ -1,6 +1,19 @@
 <!DOCTYPE html>
 <html>
-
+<div class="frame">
+	<div class="center">
+		<div class="title">
+			<h1>Drop file to upload</h1>
+		</div>
+    
+    <div class="dropzone">
+			<img src="http://100dayscss.com/codepen/upload.svg" class="upload-icon" />
+            <!-- onchange="previewImage(event)" 미리보기 옵션-->
+      <input type="file" name="image" class="image-input"   id="image-input" >  
+    </div>
+        <input type="button" class = "btn" value="Detect Objects" onclick="detectObjects()">
+        
+      
 <head>
   <title>Capstone</title>
   <!-- css파일 -->
@@ -11,64 +24,65 @@
 <body>
   <!-- <h1><i class="fa-regular fa-folder-arrow-up"style="font-size:100px; color:red"></i></h1> -->
 
-  <header>
-    <p>
-     <i class="fa fa-cloud-upload" aria-hidden="true"></i>
-     <span class="up">up</span>
-     <span class="load">load</span>
-    </p>
-   </header>
-   
   <form id="image-form" enctype="multipart/form-data">
-    <input type="file" name="image" id="image-input" onchange="previewImage(event)">
+    
+
+
     <img src="#" id="image-preview" style="display:none">
-    <input type="button" value="Detect Objects" onclick="detectObjects()">
+<!-- detect 버튼 -->
+
+    
+
   </form>
   <div id="result"></div>
 
-  <!-- javascript 파일 -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script>
-    function detectObjects() {
-      // Get file data from form
-      var formData = new FormData();
-      var fileInput = document.getElementById('image-input');
-      var file = fileInput.files[0];
-      formData.append('image', file);
+    <!-- javascript 파일 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        function detectObjects() {
+            // Get file data from form
+            var formData = new FormData();
+            var fileInput = document.getElementById('image-input');
+            var file = fileInput.files[0];
+            formData.append('image', file);
 
-      // Send API request
-      $.ajax({
-        url: 'http://localhost:5000/v1/object-detection/yolov5s',
-        type: 'POST',
-        data: formData,
-        contentType: false,
-        processData: false,
-        success: function (response) {
-          // Parse JSON response
-          const objects = JSON.parse(response);
+            // Send API request
+            $.ajax({
+                // url: 'http://61.79.33.143:5000/v1/object-detection/yolov5s',
+                url: 'http://localhost:5000/v1/object-detection/yolov5s',
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    // Parse JSON response
+                    const objects = JSON.parse(response);
 
-          // Extract class and name fields from objects array
-          const result = objects.map(obj => ({ class: obj.class, name: obj.name }));
+                    // Extract class and name fields from objects array
+                    const result = objects.map(obj => obj.name);
 
-          // Display result
-          $('#result').text(JSON.stringify(result));
-        },
-        error: function (error) {
-          console.error(error.status);
-          console.error(error.statusText);
-          console.error(error.responseText);
+                    // 결과 도출 (json형식)
+                    $('#result').text(`Detection : ${result.join(', ')}`);
+
+                    
+                },
+                error: function (error) {
+                    console.error(error.status);
+                    console.error(error.statusText);
+                    console.error(error.responseText);
+                }
+            });
         }
-      });
-    }
 
-    function previewImage(event) {
-      
-      var input = event.target;
-      var img = document.getElementById('image-preview');
-      img.style.display = "block";
-      img.src = URL.createObjectURL(input.files[0]);
-    }
-  </script>
+        function previewImage(event) {
+
+            var input = event.target;
+            var img = document.getElementById('image-preview');
+            img.style.display = "block";
+            img.src = URL.createObjectURL(input.files[0]);
+        }
+    </script>
 </body>
 
 </html>
+
