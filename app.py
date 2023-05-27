@@ -1,4 +1,4 @@
-# YOLOv5 🚀 by Ultralytics, AGPL-3.0 license
+
 """
 Run a Flask REST API exposing one or more YOLOv5s models
 """
@@ -17,7 +17,6 @@ CORS(app)
 models = {}
 
 DETECTION_URL = '/v1/object-detection/<model>'
-
 
 @app.route('/')
 def home():
