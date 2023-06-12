@@ -1,0 +1,82 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh;
+    text-align: center;
+    margin: 0;
+  }
+  
+  #container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  #title {
+    margin-bottom: 10px;
+  }
+  
+  #photo-button {
+    background-color: dimgray;
+    color: white;
+    font-size: 16px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px
+  }
+  
+  #image-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  #image-container img {
+    max-width: 100%;
+    height: auto;
+    margin: 10px;
+  }
+  
+  #logo-image {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
+  h2 {
+    text-align: center;
+  }
+  
+  .select-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  select {
+    width: 150px;
+    padding: 10px;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+  
+  .radio-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .radio-container input[type="radio"] {
+    margin: 5px;
+  }
+  
+  .radio-container label {
+    margin-right: 12px;
+  }
